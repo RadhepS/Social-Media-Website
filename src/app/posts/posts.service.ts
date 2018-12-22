@@ -12,5 +12,4 @@ export class PostsService {
     this.posts.push(post);
   }
 
-   // Tests
 }
