@@ -22,8 +22,4 @@ export class PostsService {
     this.posts.push(post);
     this.postsUpdated.next([...this.posts]);
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> bb43ebb48a39dab583647ffd5ae781b89cb86c66
 }
