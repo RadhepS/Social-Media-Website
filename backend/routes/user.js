@@ -22,7 +22,7 @@ router.post('/signup', (req, res, next) => {
         })
         .catch(err => {
           res.status(500).json({
-            error: err
+              message: 'Email is already taken'
           })
         })
     });
@@ -57,7 +57,7 @@ router.post("/login", (req, res, next) => {
     })
     .catch(err => {
       return res.status(401).json({
-        message: err
+        message: 'Invalid authentication credentials'
       });
     });
 });
