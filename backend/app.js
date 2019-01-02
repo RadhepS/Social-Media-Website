@@ -18,7 +18,7 @@ mongoose.connect('mongodb+srv://rad:' + process.env.MONGO_ATLAS_PW + '@cluster0-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
-app.use("/images", express.static(path.join("backend/images")));
+app.use("/images", express.static(path.join("" + process.env.IMAGES_FOLDER)));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
