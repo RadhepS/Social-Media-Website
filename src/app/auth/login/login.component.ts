@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
+import { LoginData } from './login-data.model';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    this.authService.login(form.value.email, form.value.password);
+    const loginData: LoginData = {username: form.value.username, password: form.value.password};
+    this.authService.login(loginData);
   }
 
   ngOnDestroy() {

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
+import { SignupData } from './signup-data.model';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    this.authService.createUser(form.value.email, form.value.password);
+    const signupData: SignupData = {username: form.value.username, email: form.value.email, password: form.value.password};
+    this.authService.createUser(signupData);
   }
 
   ngOnDestroy() {

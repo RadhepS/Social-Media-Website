@@ -2,8 +2,8 @@
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
       <mat-form-field>
-          <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email>
-          <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+          <input matInput name="username" ngModel type="text" placeholder="Username" #emailInput="ngModel" required >
+          <mat-error *ngIf="emailInput.invalid">Please enter a valid username.</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>

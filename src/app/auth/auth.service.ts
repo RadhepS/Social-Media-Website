@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthData } from './auth-data.module';
+import { SignupData } from './signup/signup-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { environment } from '../../environments/environment';
+import { LoginData } from './login/login-data.model';
 
 const BACK_END_URL = environment.apiUrl + '/user/';
 
@@ -33,9 +34,8 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password};
-    this.http.post(BACK_END_URL + 'signup', authData)
+  createUser(signupData: SignupData) {
+    this.http.post(BACK_END_URL + 'signup', signupData)
       .subscribe(() => {
         this.router.navigate(['/']);
       }, error => {
@@ -43,9 +43,8 @@ export class AuthService {
       });
   }
 
-  login(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password};
-    this.http.post<{token: string, expiresIn: number, userId: string}>(BACK_END_URL + 'login', authData)
+  login(loginData: LoginData) {
+    this.http.post<{token: string, expiresIn: number, userId: string}>(BACK_END_URL + 'login', loginData)
       .subscribe((response) => {
         const token = response.token;
         this.token = token;

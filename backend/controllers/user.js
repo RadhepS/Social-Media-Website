@@ -4,14 +4,17 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 exports.createUser =  (req, res, next) => {
+  const lowerCaseUsername = req.body.username.toLowerCase();
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
+        username: lowerCaseUsername,
         email: req.body.email,
         password: hash
       });
       user.save()
         .then(result => {
+          console.log(result);
           res.status(201).json({
             message: 'User created!',
             result: result
@@ -19,18 +22,19 @@ exports.createUser =  (req, res, next) => {
         })
         .catch(err => {
           res.status(500).json({
-              message: 'Email is already taken'
+              message: 'Email or username is already taken'
           })
         })
     });
 }
 
 exports.userLogin =  (req, res, next) => {
+  const lowerCaseUsername = req.body.username.toLowerCase();
   let fetchedUser;
-  User.findOne({ email: req.body.email })
+  User.findOne({ username: lowerCaseUsername })
     .then(user => {
       if (!user) {
-        throw 'Invalid email';
+        throw 'Invalid username';
       }
       fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
@@ -42,7 +46,7 @@ exports.userLogin =  (req, res, next) => {
         });
       }
       const token = jwt.sign(
-        { email: fetchedUser.email, userId: fetchedUser._id },
+        { username: fetchedUser.username, userId: fetchedUser._id },
         process.env.JWT_KEY,
         { expiresIn: "1h" }
       );
