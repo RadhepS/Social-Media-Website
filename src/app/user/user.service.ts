@@ -28,7 +28,6 @@ export class UserService {
     });
   }
 
-  // test
   getUserInfo() {
     return this.user;
   }
