@@ -12,13 +12,13 @@ const BACK_END_URL = environment.apiUrl + '/posts/';
 @Injectable({providedIn: 'root'})
 export class PostsService {
   private posts: Post[] = [];
-  private postsUpdated = new Subject<{posts: Post[], postCount: number}>();
+  private postsUpdated = new Subject<{posts: Post[]}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getPosts(postsPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-    this.http.get<{message: string, posts: any, maxPosts: number}>(BACK_END_URL + queryParams)
+  getPosts() {
+
+    this.http.get<{message: string, posts: any}>(BACK_END_URL)
       .pipe(map((postData) => {
         return { posts: postData.posts.map(post => {
           return {
@@ -28,14 +28,20 @@ export class PostsService {
             imagePath: post.imagePath,
             creator: post.creator
           };
-        }), maxPost: postData.maxPosts};
+        })};
       }))
       .subscribe((transformedPostsData) => {
         this.posts = transformedPostsData.posts;
-        this.postsUpdated.next({posts: [...this.posts], postCount: transformedPostsData.maxPost});
+        this.postsUpdated.next({posts: [...this.posts]});
       });
   }
 
+  getUserPosts(id: string) {
+    this.http.get<{message: string, posts: any}>(BACK_END_URL + 'userposts/' + id)
+      .subscribe(() => {
+        console.log('works');
+      });
+  }
 
   getPostUpdatedListener() {
     return this.postsUpdated.asObservable();

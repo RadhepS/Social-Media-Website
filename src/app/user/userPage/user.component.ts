@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
+import { PostsService } from 'src/app/posts/posts.service';
 
 
 
@@ -14,7 +15,7 @@ export class UserComponent implements OnInit {
   isLoading = false;
   user: User;
 
-  constructor(private userService: UserService, public route: ActivatedRoute, public router: Router ) {}
+  constructor(private userService: UserService, public route: ActivatedRoute, public router: Router, private postService: PostsService ) {}
 
     ngOnInit() {
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
