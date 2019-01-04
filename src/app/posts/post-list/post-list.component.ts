@@ -19,9 +19,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   // ];
   posts: Post[] = [];
   isLoading = false;
-  postsPerPage = 2;
-  currentPage = 1;
-
   userIsAuthenticated = false;
   userId: string;
   private postsSub: Subscription;
