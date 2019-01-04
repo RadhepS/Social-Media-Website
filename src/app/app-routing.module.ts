@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: '', component: PostListComponent },
   { path: 'create', component: PostCreateComponent, canActivate: [AuthGuard]},
   { path: 'edit/:postId', component: PostCreateComponent, canActivate: [AuthGuard]},
-  { path: 'user', loadChildren: './auth/auth.module#AuthModule'}
+  { path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+  { path: 'user', loadChildren: './user/user.module#UserModule'}
 ];
 
 @NgModule({

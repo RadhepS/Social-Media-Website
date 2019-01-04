@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { LoginData } from './login/login-data.model';
 
-const BACK_END_URL = environment.apiUrl + '/user/';
+const BACK_END_URL = environment.apiUrl + '/auth/';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

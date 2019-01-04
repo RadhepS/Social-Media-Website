@@ -1,0 +1,18 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<mat-card *ngIf="!isLoading" class='profile-card'>
+  <div class="test">
+    <ul>
+      <li> <mat-card-content>Followers: </mat-card-content> </li>
+      <li> <mat-card-content>Following: </mat-card-content> </li>
+      <li> <mat-card-content>Posts: </mat-card-content> </li>
+    </ul>
+  </div>
+  <div>
+    <mat-card-title>{{this.user.username}}</mat-card-title>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  </div>
+  <div></div>
+</mat-card>
+
+<app-post-list></app-post-list>

@@ -36,6 +36,7 @@ export class PostsService {
       });
   }
 
+
   getPostUpdatedListener() {
     return this.postsUpdated.asObservable();
   }

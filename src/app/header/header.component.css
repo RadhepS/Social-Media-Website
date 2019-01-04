@@ -13,3 +13,9 @@ a {
 .spacer {
   flex: 1 1 auto;
 }
+
+.header-color {
+  color: #fff;
+  background-color: #263238;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
+}

@@ -1,0 +1,42 @@
+.profile-card {
+  background-color: #fafafa;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  max-width: 800px;
+  height: 400px;
+}
+
+.profile-card div {
+  width: 100px;  /* Or whatever */
+  margin: auto;  /* Magic! */
+  margin-top: 1rem;
+}
+
+img {
+  position: relative;
+  top: 80px;
+  border-radius: 10%;
+}
+
+.test ul {
+  list-style: none;
+  padding: 0;
+  position: relative;
+  top: 97px;
+}
+
+div mat-card-title {
+  position: relative;
+  left: 12px;
+}
+
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
