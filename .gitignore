@@ -8,7 +8,7 @@
 # dependencies
 /node_modules
 
-nodemon.json
+/nodemon.json
 
 /src/environments/environment.prod.ts
 
