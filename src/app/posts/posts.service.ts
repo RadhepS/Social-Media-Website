@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Post } from './post.model';
 import { Router } from '@angular/router';
+import { User } from '../user/user.model';
 
 const BACK_END_URL = environment.apiUrl + '/posts/';
 
@@ -38,8 +39,26 @@ export class PostsService {
 
   getUserPosts(id: string) {
     this.http.get<{message: string, posts: any}>(BACK_END_URL + 'userposts/' + id)
-      .subscribe(() => {
-        console.log('works');
+      // .subscribe((response) => {
+      //   this.posts = response.posts;
+      //   this.postsUpdated.next( {posts: [...this.posts]} );
+      // });
+      .pipe(map((postData) => {
+        return { posts: postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            id: post._id,
+            imagePath: post.imagePath,
+            creator: post.creator,
+            username: post.username,
+            isUserPage: true
+          };
+        })};
+      }))
+      .subscribe((transformedPostsData) => {
+        this.posts = transformedPostsData.posts;
+        this.postsUpdated.next({posts: [...this.posts]});
       });
   }
 
@@ -54,6 +73,7 @@ export class PostsService {
        content: string;
        imagePath: string;
        creator: string;
+       username: string;
       }>(BACK_END_URL + id);
   }
 
@@ -71,7 +91,7 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string) {
+  updatePost(id: string, title: string, content: string, image: File | string, username: string) {
     let postData: Post | FormData;
     if (typeof(image) === 'object') {
       postData = new FormData();
@@ -80,7 +100,7 @@ export class PostsService {
       postData.append('content', content);
       postData.append('image', image, title);
     } else {
-      postData = {id: id, title: title, content: content, imagePath: image, creator: null};
+      postData = {id: id, title: title, content: content, imagePath: image, creator: null, username: null};
     }
     this.http.put<{message: string}>(BACK_END_URL + id, postData)
       .subscribe((response) => {
@@ -90,7 +110,11 @@ export class PostsService {
         // updatedPosts[oldPostIndex] = post;
         // this.posts = updatedPosts;
         // this.postsUpdated.next([...this.posts]);
-        this.router.navigate(['/']);
+        if (username) {
+          this.router.navigate(['/user/', username]);
+        } else {
+          this.router.navigate(['/']);
+        }
       });
   }
 

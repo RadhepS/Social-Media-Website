@@ -9,8 +9,8 @@
     </div>
     <p>{{post.content}}</p>
     <mat-action-row *ngIf="userIsAuthenticated && (userId === post.creator)">
-      <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
-      <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
+      <a mat-button color="primary" (click)="onEdit(post.id, post.isUserPage, post.username)">EDIT</a>
+      <button mat-button color="warn" (click)="onDelete(post.id, post.isUserPage, post.creator)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

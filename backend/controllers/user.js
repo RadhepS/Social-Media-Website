@@ -1,7 +1,6 @@
 const User = require('../models/user');
 
 exports.getUser =  (req, res, next) => {
-  console.log(req.params.username);
 
   User.findOne({ username: req.params.username }).then((user) => {
     if (user) {

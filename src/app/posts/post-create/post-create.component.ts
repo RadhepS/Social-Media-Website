@@ -7,6 +7,7 @@ import { Post } from '../post.model';
 import { mimeType } from './mime-type.validator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-post-create',
@@ -24,6 +25,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   post: Post;
   form: FormGroup;
+  username: string;
 
   constructor(
     public postsService: PostsService,
@@ -49,10 +51,13 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
         this.isLoading = true;
+        if (paramMap.get('username') !== '') {
+          this.username = paramMap.get('username');
+        }
         this.postsService.getPost(this.postId).subscribe(postData => {
         this.isLoading = false;
           // tslint:disable-next-line:max-line-length
-          this.post = {id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath, creator: postData.creator};
+          this.post = {id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath, creator: postData.creator, username: postData.username};
           this.form.setValue({'title': this.post.title, 'content': this.post.content, 'image': this.post.imagePath});
         });
       } else {
@@ -82,7 +87,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     if (this.mode === 'create' ) {
     this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
     } else {
-      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image);
+      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image, this.username);
     }
     this.form.reset();
   }

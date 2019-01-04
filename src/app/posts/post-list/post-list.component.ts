@@ -5,6 +5,7 @@ import { PageEvent } from '@angular/material';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -12,11 +13,7 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  // posts = [
-  //   { title: 'First Post', content: 'This is the first post\'s content' },
-  //   { title: 'Second Post', content: 'This is the second post\'s content' },
-  //   { title: 'Third post', content: 'This is the third post\'s content' }
-  // ];
+
   posts: Post[] = [];
   isLoading = false;
   userIsAuthenticated = false;
@@ -24,7 +21,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
-  constructor( public postsService: PostsService, private authService: AuthService) {}
+  constructor( public postsService: PostsService, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -42,11 +39,23 @@ export class PostListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onEdit(postId: string, isUserPage: boolean, username: string) {
+    if (isUserPage) {
+      this.router.navigate(['/edit', postId, username]);
+    } else {
+    this.router.navigate(['/edit', postId]);
+    }
+  }
 
-  onDelete(postId: string) {
+
+  onDelete(postId: string, isUserPage: boolean, creator: string) {
     this.isLoading = true;
     this.postsService.deletePost(postId).subscribe(() => {
+      if (isUserPage) {
+        this.postsService.getUserPosts(creator);
+      } else {
       this.postsService.getPosts();
+      }
     }, () => {
       this.isLoading = false;
     });

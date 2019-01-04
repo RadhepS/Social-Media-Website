@@ -8,7 +8,8 @@ import { AuthGuard } from './auth/auth-guard';
 const routes: Routes = [
   { path: '', component: PostListComponent },
   { path: 'create', component: PostCreateComponent, canActivate: [AuthGuard]},
-  { path: 'edit/:postId', component: PostCreateComponent, canActivate: [AuthGuard]},
+  { path: 'edit/:postId', redirectTo: 'edit/:postId/', canActivate: [AuthGuard]},
+  { path: 'edit/:postId/:username', component: PostCreateComponent, canActivate: [AuthGuard]},
   { path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
   { path: 'user', loadChildren: './user/user.module#UserModule'}
 ];

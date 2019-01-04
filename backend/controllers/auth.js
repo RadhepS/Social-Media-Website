@@ -14,7 +14,6 @@ exports.createUser =  (req, res, next) => {
       });
       user.save()
         .then(result => {
-          console.log(result);
           res.status(201).json({
             message: 'User created!',
             result: result
@@ -29,7 +28,6 @@ exports.createUser =  (req, res, next) => {
 }
 
 exports.userLogin =  (req, res, next) => {
-  console.log('madeit');
   const lowerCaseUsername = req.body.username.toLowerCase();
   let fetchedUser;
   User.findOne({ username: lowerCaseUsername })
