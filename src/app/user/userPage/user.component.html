@@ -12,7 +12,15 @@
     <mat-card-title>{{this.user.username}}</mat-card-title>
     <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
   </div>
-  <div></div>
+  <div>
+    <!-- Only show the button if the user is logged in and he is not viewing his own profile-->
+    <div *ngIf="loginId && !isSameUser">
+      <!-- If the user on the profile is not followed, then we show the follow button -->
+      <button *ngIf="!user.isFollowed" (click)="followUser()">Follow</button>
+      <!-- If the user on the profile is followed, then we show the following button -->
+      <button *ngIf="user.isFollowed" style="background-color: lightblue;" (click)="unfollowUser()">Following</button>
+    </div>
+  </div>
 </mat-card>
 
 <app-post-list></app-post-list>
