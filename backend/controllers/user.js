@@ -6,7 +6,7 @@ exports.getUser = (req, res, next) => {
   User.findOne({ username: req.params.username })
     .then(user => {
       if (user) {
-        const isInArray = user.following.some(function (followingUsers) { //Checks to see if logged in user is following the user he's requesting
+        const isInArray = user.followers.some(function (followingUsers) { //Checks to see if logged in user is following the user he's requesting
           return followingUsers.equals(req.params.loginId);
         });
         if (isInArray) {
@@ -43,14 +43,14 @@ exports.followUser = (req, res, next) => {
 
   User.updateOne(
     { _id: loginId }, //Find the logged-in user
-    { $addToSet: { following: followId } } //Add the user he wants to follow into his following list
+    { $addToSet: { following: followId } } //Add the user he wants to follow into the logged-in user's following list
   )
     .then(result => {
       //Continue if previous update was successful
       if (result.n > 0) {
         User.updateOne(
           { _id: followId }, //Find the user being followed
-          { $addToSet: { followers: loginId } } //Add the logged in user to his follower list
+          { $addToSet: { followers: loginId } } //Add the logged in user to the followed user's follower list
         ).then(result => {
           if (result.n > 0) {
             res.status(200).json({
@@ -66,7 +66,43 @@ exports.followUser = (req, res, next) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: "Couldn't update post"
+        message: "Couldn't follow user"
       });
     });
+};
+
+exports.unfollowUser = (req, res, next) => {
+
+  const loginId = req.body.loginId;
+  const followId = req.body.followId;
+
+  User.updateOne(
+    { _id: loginId }, //Find the logged-in user
+    { $pull: { following: followId } } //Remove the user he wants to unfollow from the logged-in user's following list
+  )
+    .then(result => {
+      //Continue if previous update was successful
+      if (result.n > 0) {
+        User.updateOne(
+          { _id: followId }, //Find the user being followed
+          { $pull: { followers: loginId } } //Remove the logged-in user from the followed user's follower list
+        ).then(result => {
+          if (result.n > 0) {
+            res.status(200).json({
+              message: 'Unfollow successful'
+            });
+          } else {
+            res.status(401).json({ message: 'Unfollow unsuccessful' });
+          }
+        });
+      } else {
+        res.status(401).json({ message: 'Unfollow unsuccessful' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Couldn't unfollow user"
+      });
+    });
+
 };

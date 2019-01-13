@@ -9,4 +9,6 @@ router.get("/:username/:loginId", UserController.getUser);
 
 router.post("/follow", UserController.followUser);
 
+router.post("/unfollow", UserController.unfollowUser);
+
 module.exports = router;

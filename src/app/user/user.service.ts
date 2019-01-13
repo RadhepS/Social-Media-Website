@@ -30,11 +30,12 @@ export class UserService {
   }
 
   followUser(followData: FollowData) {
-
     return this.http.post(BACK_END_URL + 'follow', followData);
   }
 
-
+  unfollowUser(followData: FollowData) {
+    return this.http.post(BACK_END_URL + 'unfollow', followData);
+  }
 
   getUserInfo() {
     return this.user;

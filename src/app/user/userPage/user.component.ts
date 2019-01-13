@@ -57,7 +57,9 @@ export class UserComponent implements OnInit {
   }
 
   unfollowUser() {
-    this.user.isFollowed = false;
-    console.log('unfollowing');
+    const unfollowData: FollowData = {loginId: this.loginId, followId: this.user.id};
+    this.userService.unfollowUser(unfollowData).subscribe(() => {
+      this.user.isFollowed = false;
+    });
   }
 }
