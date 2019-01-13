@@ -5,6 +5,7 @@ import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -16,18 +17,25 @@ export class PostListComponent implements OnInit, OnDestroy {
   isLoading = false;
   userIsAuthenticated = false;
   userId: string;
+  isUserPage = false;
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
   constructor(
     public postsService: PostsService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      this.isUserPage = paramMap.has('username'); // Checks to see whether we're on the user page
+    });
     this.isLoading = true;
+    if (!this.isUserPage) { // If we're not on the user page then retrieve all posts
     this.postsService.getPosts();
+    }
     this.userId = this.authService.getUserId();
     this.postsSub = this.postsService
       .getPostUpdatedListener()

@@ -10,7 +10,9 @@ exports.createUser =  (req, res, next) => {
       const user = new User({
         username: lowerCaseUsername,
         email: req.body.email,
-        password: hash
+        password: hash,
+        followers: [],
+        following: []
       });
       user.save()
         .then(result => {
