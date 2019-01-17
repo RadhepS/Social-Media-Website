@@ -3,9 +3,9 @@
 <mat-card *ngIf="!isLoading" class='profile-card'>
   <div class="test">
     <ul>
-      <li> <mat-card-content>Followers: </mat-card-content> </li>
-      <li> <mat-card-content>Following: </mat-card-content> </li>
-      <li> <mat-card-content>Posts: </mat-card-content> </li>
+      <li> <mat-card-content>Followers: {{user.followerCount}} </mat-card-content> </li>
+      <li> <mat-card-content>Following: {{user.followingCount}} </mat-card-content> </li>
+      <li> <mat-card-content>Posts: {{user.postCount}} </mat-card-content> </li>
     </ul>
   </div>
   <div>
