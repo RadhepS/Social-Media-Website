@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const Post = require('../models/post');
+
 var mongoose = require('mongoose');
 
 exports.getUser = (req, res, next) => {
@@ -9,17 +11,21 @@ exports.getUser = (req, res, next) => {
         const isInArray = user.followers.some(function (followingUsers) { //Checks to see if logged in user is following the user he's requesting
           return followingUsers.equals(req.params.loginId);
         });
-        if (isInArray) {
-          res.status(200).json({
-            message: 'User found',
-            user: { id: user._id, username: user.username, isFollowed: true } //Return that the logged in user is following the user he's requesting
+        let postCount;
+        //Find post count
+         Post.find({ creator: user._id }).countDocuments().then(result => {
+          postCount = result;
+          //Find following/follower count and return user data
+          User.findOne({_id: user._id}).then((result) => {
+            const followerCount = result.followers.length;
+            const followingCount = result.following.length;
+            res.status(200).json({
+              message: 'User found',
+              //Return user data
+              user: { id: user._id, username: user.username, isFollowed: isInArray, postCount: postCount, followerCount: followerCount, followingCount: followingCount }
           });
-        } else {
-        res.status(200).json({
-          message: 'User found',
-          user: { id: user._id, username: user.username, isFollowed: false } //Otherwise return that the logged in user is not following the user he's requesting
+          })
         });
-      }
       } else {
         throw 'User not found';
       }
