@@ -7,8 +7,8 @@ import { FollowListData } from '../follow-list-data';
 
 
 @Component({
-  templateUrl: 'follower-list-modal.component.html',
-  styleUrls: ['./follower-list-modal.component.css']
+  templateUrl: 'list-modal.component.html',
+  styleUrls: ['./list-modal.component.css']
 })
 export class ListModalComponent {
 

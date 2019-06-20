@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './userPage/user.component';
 import { PostsModule } from '../posts/posts.module';
-import { ListModalComponent } from './list-modals/follower-list-modal.component';
+import { ListModalComponent } from './list-modals/list-modal.component';
 
 @NgModule({
   declarations: [

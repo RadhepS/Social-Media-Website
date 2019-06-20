@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FollowData } from '../follow-data.model';
 import { MatDialog } from '@angular/material';
-import { ListModalComponent } from '../list-modals/follower-list-modal.component';
+import { ListModalComponent } from '../list-modals/list-modal.component';
 import { FollowListData } from '../follow-list-data';
 import { ListType } from '../list-type.enum';
 
