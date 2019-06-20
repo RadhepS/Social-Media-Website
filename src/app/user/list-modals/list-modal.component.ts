@@ -21,5 +21,4 @@ export class ListModalComponent {
     this.router.navigate([`/user/${name}`]);
     this.dialogRef.close();
   }
-
 }

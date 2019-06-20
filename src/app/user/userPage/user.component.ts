@@ -71,6 +71,7 @@ export class UserComponent implements OnInit {
     if (!list || list.length === 0) {
       return;
     }
+
     this.dialog.open(ListModalComponent, {
       width: '400px',
       data: {
@@ -89,17 +90,6 @@ export class UserComponent implements OnInit {
   getFollowingList() {
     this.userService.getFollowingList(this.user.id).subscribe((result) => {
       this.openListDialog(result.followingList, ListType.Following);
-    });
-  }
-
-  openFollowingDialog(followingList: FollowListData[]): void {
-    console.log(followingList);
-    if (!followingList || followingList.length === 0) {
-      return;
-    }
-    this.dialog.open(ListModalComponent, {
-      width: '400px',
-      data: followingList
     });
   }
 }
