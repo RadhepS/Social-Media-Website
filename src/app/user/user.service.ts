@@ -7,6 +7,7 @@ import { User } from './user.model';
 import { PostsService } from '../posts/posts.service';
 import { Subject } from 'rxjs';
 import { FollowData } from './follow-data.model';
+import { FollowListData } from './follow-list-data';
 
 const BACK_END_URL = environment.apiUrl + '/user/';
 
@@ -35,6 +36,14 @@ export class UserService {
 
   unfollowUser(followData: FollowData) {
     return this.http.post(BACK_END_URL + 'unfollow', followData);
+  }
+
+  getFollowerList(userId: string) {
+    return this.http.get<{followerList: FollowListData[]}>(BACK_END_URL + 'followerlist' + '/' + userId );
+  }
+
+  getFollowingList(userId: string) {
+    return this.http.get<{followingList: FollowListData[]}>(BACK_END_URL + 'followingList' + '/' + userId );
   }
 
   getUserInfo() {

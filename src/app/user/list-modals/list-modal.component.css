@@ -1,0 +1,8 @@
+.flexContainer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flexItem {
+  padding-left: 40px;
+}

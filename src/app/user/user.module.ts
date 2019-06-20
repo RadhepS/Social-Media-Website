@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './userPage/user.component';
 import { PostsModule } from '../posts/posts.module';
+import { ListModalComponent } from './list-modals/list-modal.component';
 
 @NgModule({
   declarations: [
-    UserComponent
+    UserComponent,
+    ListModalComponent
   ],
   imports: [
     CommonModule,
@@ -16,6 +18,9 @@ import { PostsModule } from '../posts/posts.module';
     FormsModule,
     UserRoutingModule,
     PostsModule
+  ],
+  entryComponents: [
+    ListModalComponent
   ]
 })
 export class UserModule {}

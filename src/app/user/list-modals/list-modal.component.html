@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{this.data.listType}}</h2>
+<mat-dialog-content class="mat-typography">
+  <div *ngFor="let follower of this.data.list">
+    <h3 (click)="goToUserPage(follower.name)">{{follower.name}}</h3>
+    <div class="flexContainer">
+    <p>Follower: {{follower.followerCount}}</p>
+    <p class="flexItem">Following: {{follower.followingCount}}</p>
+  </div>
+    <hr>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>
