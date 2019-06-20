@@ -6,6 +6,10 @@ import { PostsService } from 'src/app/posts/posts.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FollowData } from '../follow-data.model';
+import { MatDialog } from '@angular/material';
+import { ListModalComponent } from '../list-modals/follower-list-modal.component';
+import { FollowListData } from '../follow-list-data';
+import { ListType } from '../list-type.enum';
 
 @Component({
   templateUrl: './user.component.html',
@@ -18,13 +22,16 @@ export class UserComponent implements OnInit {
   isFollowed = false;
   isSameUser = false;
   loginId: string;
+  followingListData: FollowListData[];
+
 
   constructor(
     private userService: UserService,
     public route: ActivatedRoute,
     public router: Router,
     private postService: PostsService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog: MatDialog
   ) {}
 
 
@@ -62,4 +69,42 @@ export class UserComponent implements OnInit {
       this.user.isFollowed = false;
     });
   }
+
+  openListDialog(list: FollowListData[], listType: ListType): void {
+    if (!list || list.length === 0) {
+      return;
+    }
+    this.dialog.open(ListModalComponent, {
+      width: '400px',
+      data: {
+        list,
+        listType
+      }
+    });
+  }
+
+  getFollowerList() {
+    this.userService.getFollowerList(this.user.id).subscribe((result) => {
+      this.openListDialog(result.followerList, ListType.Followers);
+    });
+  }
+
+  getFollowingList() {
+    this.userService.getFollowingList(this.user.id).subscribe((result) => {
+      this.openListDialog(result.followingList, ListType.Following);
+    });
+  }
+
+  openFollowingDialog(followingList: FollowListData[]): void {
+    console.log(followingList);
+    if (!followingList || followingList.length === 0) {
+      return;
+    }
+    this.dialog.open(ListModalComponent, {
+      width: '400px',
+      data: followingList
+    });
+  }
 }
+
+
