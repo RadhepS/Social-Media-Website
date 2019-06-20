@@ -1,9 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import { Router } from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { FollowListData } from '../follow-list-data';
-
-
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 
 @Component({

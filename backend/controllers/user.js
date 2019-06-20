@@ -72,7 +72,7 @@ exports.getFollowerList = (req, res, next) => {
 
 exports.getFollowingList = (req, res, next) => {
   User.findOne({ _id: req.params.userId }).then(result => {
-    //Find the list of IDs that user follows
+    //Find the list of IDs that are following the user
     const followingList = result.following;
     User.find({
       _id: {
@@ -86,7 +86,7 @@ exports.getFollowingList = (req, res, next) => {
         followingCount: following.following.length
       }));
       res.status(200).json({
-        //Return the list of people that are followed by the user
+        //Return the list of people that are following the user
         followingList: formattedFollowingList
       });
     });

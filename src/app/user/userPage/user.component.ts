@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
-import { PostsService } from 'src/app/posts/posts.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FollowData } from '../follow-data.model';
@@ -22,14 +21,12 @@ export class UserComponent implements OnInit {
   isFollowed = false;
   isSameUser = false;
   loginId: string;
-  followingListData: FollowListData[];
 
 
   constructor(
     private userService: UserService,
     public route: ActivatedRoute,
     public router: Router,
-    private postService: PostsService,
     private authService: AuthService,
     public dialog: MatDialog
   ) {}
