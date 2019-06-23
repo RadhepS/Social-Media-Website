@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Post } from './post.model';
 import { Router } from '@angular/router';
-import { User } from '../user/user.model';
 
 const BACK_END_URL = environment.apiUrl + '/posts/';
 
@@ -83,7 +82,7 @@ export class PostsService {
     postData.append('content', content);
     postData.append('image', image, title);
     this.http.post<{message: string, post: Post}>(BACK_END_URL, postData)
-      .subscribe((responseData) => {
+      .subscribe(() => {
         // const post: Post = {id: responseData.post.id, title: title, content: content, imagePath: responseData.post.imagePath};
         // this.posts.push(post);
         // this.postsUpdated.next([...this.posts]);
@@ -103,7 +102,7 @@ export class PostsService {
       postData = {id: id, title: title, content: content, imagePath: image, creator: null, username: null};
     }
     this.http.put<{message: string}>(BACK_END_URL + id, postData)
-      .subscribe((response) => {
+      .subscribe(() => {
         // const updatedPosts = [...this.posts];
         // const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
         // const post: Post = {id: id, title: title, content: content, imagePath: ''};

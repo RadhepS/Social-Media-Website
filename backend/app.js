@@ -13,8 +13,8 @@ mongoose.connect('mongodb+srv://rad:' + process.env.MONGO_ATLAS_PW + '@cluster0-
   .then(() => {
     console.log('connected to database!');
   })
-  .catch(() => {
-    console.log('Connection failed!');
+  .catch(error => {
+    console.log('Connection failed: ' + error);
   });
 
 app.use(bodyParser.json());
