@@ -25,7 +25,7 @@ export class UserService {
       this.user = response.user;
       this.userUpdated.next({user: this.user});
       this.postService.getUserPosts(this.user.id);
-    }, error => {
+    }, () => {
       this.router.navigate(['/']);
     });
   }
