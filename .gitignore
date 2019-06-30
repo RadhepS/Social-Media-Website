@@ -7,10 +7,9 @@
 
 # dependencies
 /node_modules
-
 /nodemon.json
-
 /src/environments/environment.prod.ts
+/backend/images
 
 # profiling files
 chrome-profiler-events.json

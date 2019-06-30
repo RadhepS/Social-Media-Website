@@ -2,16 +2,40 @@
 <mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>
-      {{post.title}}
+      {{ post.title }}
     </mat-expansion-panel-header>
     <div class="post-image">
-      <img [src]="post.imagePath" [alt]="post.title">
+      <img [src]="post.imagePath" [alt]="post.title" />
     </div>
-    <p>{{post.content}}</p>
-    <mat-action-row *ngIf="userIsAuthenticated && (userId === post.creator)">
-      <a mat-button color="primary" (click)="onEdit(post.id, post.isUserPage, post.username)">EDIT</a>
-      <button mat-button color="warn" (click)="onDelete(post.id, post.isUserPage, post.creator)">DELETE</button>
+    <p>{{ post.content }}</p>
+    <mat-action-row>
+      <p>{{ post.likeCount }}</p>
+      <div class="likes-and-comments" *ngIf="userId != post.creator">
+        <app-post-likes
+          [postId]="post.id"
+          [postCreator]="post.creator"
+          [userId]="userId"
+          (like)="onLike($event, post)"
+        ></app-post-likes>
+      </div>
+      <div *ngIf="userIsAuthenticated && userId === post.creator">
+        <a
+          mat-button
+          color="primary"
+          (click)="onEdit(post.id, post.isUserPage, post.username)"
+          >EDIT</a
+        >
+        <button
+          mat-button
+          color="warn"
+          (click)="onDelete(post.id, post.isUserPage, post.creator)"
+        >
+          DELETE
+        </button>
+      </div>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No posts added yet!</p>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">
+  No posts added yet!
+</p>

@@ -6,12 +6,10 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PostListComponent } from './post-list/post-list.component';
+import { PostLikesComponent } from './post-likes/post-likes.component';
 
 @NgModule({
-  declarations: [
-    PostCreateComponent,
-    PostListComponent
-  ],
+  declarations: [PostCreateComponent, PostListComponent, PostLikesComponent],
   exports: [PostListComponent],
   imports: [
     CommonModule,
