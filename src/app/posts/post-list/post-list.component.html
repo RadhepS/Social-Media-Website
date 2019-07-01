@@ -15,6 +15,7 @@
           [postId]="post.id"
           [postCreator]="post.creator"
           [userId]="userId"
+          [isAuthenticated]="userIsAuthenticated"
           (like)="onLike($event, post)"
         ></app-post-likes>
       </div>

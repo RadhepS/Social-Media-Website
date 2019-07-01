@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PostsService } from '../posts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-likes',
@@ -13,14 +14,20 @@ export class PostLikesComponent implements OnInit {
   postCreator: string;
   @Input()
   userId: string;
+  @Input()
+  isAuthenticated: boolean;
   @Output()
   like: EventEmitter<any> = new EventEmitter();
 
-  constructor(public postsService: PostsService) {}
+  constructor(private postsService: PostsService, private router: Router) {}
 
   ngOnInit() {}
 
   likePost() {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['auth/login']);
+      return;
+    }
     this.postsService
       .likePost(this.postId, this.postCreator, this.userId)
       .subscribe(result => {
