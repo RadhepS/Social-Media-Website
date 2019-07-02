@@ -31,3 +31,14 @@ mat-action-row {
 .likes-and-comments {
   margin-right: auto;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.mat-container {
+  display: inline-flex;
+  justify-content: center;
+}

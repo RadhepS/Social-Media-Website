@@ -7,17 +7,25 @@
     <div class="post-image">
       <img [src]="post.imagePath" [alt]="post.title" />
     </div>
-    <p>{{ post.content }}</p>
+    <p>
+      {{ post.content }}
+    </p>
     <mat-action-row>
-      <p>{{ post.likeCount }}</p>
       <div class="likes-and-comments" *ngIf="userId != post.creator">
-        <app-post-likes
-          [postId]="post.id"
-          [postCreator]="post.creator"
-          [userId]="userId"
-          [isAuthenticated]="userIsAuthenticated"
-          (like)="onLike($event, post)"
-        ></app-post-likes>
+        <div class="container">
+          <div class="mat-container">
+            <mat-icon matBadge="{{ post.likeCount }}" matBadgeSize="small"
+              >thumb_up</mat-icon
+            >
+          </div>
+          <app-post-likes
+            [postId]="post.id"
+            [postCreator]="post.creator"
+            [userId]="userId"
+            [isAuthenticated]="userIsAuthenticated"
+            (like)="onLike($event, post)"
+          ></app-post-likes>
+        </div>
       </div>
       <div *ngIf="userIsAuthenticated && userId === post.creator">
         <a
