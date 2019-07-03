@@ -8,9 +8,10 @@ import { RouterModule } from '@angular/router';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostLikesComponent } from './post-likes/post-likes.component';
 import { MatIconModule, MatBadgeModule } from '@angular/material';
+import { PostLikeCounterComponent } from './post-like-counter/post-like-counter.component';
 
 @NgModule({
-  declarations: [PostCreateComponent, PostListComponent, PostLikesComponent],
+  declarations: [PostCreateComponent, PostListComponent, PostLikesComponent, PostLikeCounterComponent],
   exports: [PostListComponent],
   imports: [
     CommonModule,

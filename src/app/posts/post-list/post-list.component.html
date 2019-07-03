@@ -13,10 +13,10 @@
     <mat-action-row>
       <div class="likes-and-comments" *ngIf="userId != post.creator">
         <div class="container">
-          <div class="mat-container">
-            <mat-icon matBadge="{{ post.likeCount }}" matBadgeSize="small"
-              >thumb_up</mat-icon
-            >
+          <div class="like-counter-centered">
+            <app-post-like-counter
+              [likeCount]="post.likeCount"
+            ></app-post-like-counter>
           </div>
           <app-post-likes
             [postId]="post.id"
