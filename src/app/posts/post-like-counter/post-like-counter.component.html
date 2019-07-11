@@ -1,1 +1,6 @@
-<mat-icon matBadge="{{ likeCount }}" matBadgeSize="small">thumb_up</mat-icon>
+<mat-icon
+  (click)="getLikedUsers()"
+  matBadge="{{ likeCount }}"
+  matBadgeSize="small"
+  >thumb_up</mat-icon
+>

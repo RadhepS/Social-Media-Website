@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 
 exports.createPost = (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
@@ -165,6 +166,38 @@ exports.likePost = (req, res, next) => {
     .catch(error => {
       res.status(500).json({
         message: "Couldn't update post"
+      });
+    });
+};
+
+exports.getLikedUsers = (req, res, next) => {
+  Post.findById(req.params.postId)
+    .then(result => {
+      User.find({
+        _id: {
+          $in: result.likesUsers
+        }
+      })
+        .then(result => {
+          const formattedUserData = result.map(user => ({
+            name: user.username,
+            followerCount: user.followers.length,
+            followingCount: user.following.length
+          }));
+          res.status(200).json({
+            message: 'Retrieved liked users successfully',
+            likedUsers: formattedUserData
+          });
+        })
+        .catch(error => {
+          res.status(500).json({
+            message: error
+          });
+        });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: error
       });
     });
 };

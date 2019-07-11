@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-post-like-counter',
@@ -8,6 +9,14 @@ import { Component, Input } from '@angular/core';
 export class PostLikeCounterComponent {
   @Input()
   likeCount: number;
+  @Input()
+  postId: string;
 
-  constructor() {}
+  constructor(private postsService: PostsService) {}
+
+  getLikedUsers() {
+    this.postsService.getLikedUsers(this.postId).subscribe(result => {
+      console.log(result);
+    });
+  }
 }

@@ -157,4 +157,10 @@ export class PostsService {
       postLikeData
     );
   }
+
+  getLikedUsers(postId: string) {
+    return this.http.get<{ message: string; likedUsers: any }>(
+      BACK_END_URL + 'getLikedUsers' + '/' + postId
+    );
+  }
 }
