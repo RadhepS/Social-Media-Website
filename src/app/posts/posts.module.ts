@@ -9,9 +9,16 @@ import { PostListComponent } from './post-list/post-list.component';
 import { PostLikesComponent } from './post-likes/post-likes.component';
 import { MatIconModule, MatBadgeModule } from '@angular/material';
 import { PostLikeCounterComponent } from './post-like-counter/post-like-counter.component';
+import { ListModalComponent } from '../shared/list-modals/list-modal.component';
 
 @NgModule({
-  declarations: [PostCreateComponent, PostListComponent, PostLikesComponent, PostLikeCounterComponent],
+  declarations: [
+    PostCreateComponent,
+    PostListComponent,
+    PostLikesComponent,
+    PostLikeCounterComponent,
+    ListModalComponent
+  ],
   exports: [PostListComponent],
   imports: [
     CommonModule,
@@ -20,6 +27,7 @@ import { PostLikeCounterComponent } from './post-like-counter/post-like-counter.
     RouterModule,
     MatIconModule,
     MatBadgeModule
-  ]
+  ],
+  entryComponents: [ListModalComponent]
 })
 export class PostsModule {}

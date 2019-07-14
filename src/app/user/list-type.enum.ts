@@ -1,4 +1,5 @@
 export enum ListType {
   Followers = 'Followers',
-  Following = 'Following'
+  Following = 'Following',
+  Likes = 'Likes'
 }
