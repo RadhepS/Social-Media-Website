@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { FollowData } from '../follow-data.model';
 import { MatDialog } from '@angular/material';
-import { ListModalComponent } from '../list-modals/list-modal.component';
-import { FollowListData } from '../follow-list-data';
+import { ListModalComponent } from '../../shared/list-modals/list-modal.component';
+import { UserListData } from '../user-list-data';
 import { ListType } from '../list-type.enum';
 
 @Component({
@@ -22,7 +22,6 @@ export class UserComponent implements OnInit {
   isSameUser = false;
   loginId: string;
 
-
   constructor(
     private userService: UserService,
     public route: ActivatedRoute,
@@ -30,7 +29,6 @@ export class UserComponent implements OnInit {
     private authService: AuthService,
     public dialog: MatDialog
   ) {}
-
 
   ngOnInit() {
     this.loginId = this.authService.getUserId();
@@ -49,25 +47,31 @@ export class UserComponent implements OnInit {
   }
 
   // Checks to see if the user logged in is the same as the user on the user page
-  checkIfSameUser(loggedInUser: string, viewingUser: string ) {
+  checkIfSameUser(loggedInUser: string, viewingUser: string) {
     this.isSameUser = loggedInUser === viewingUser;
   }
 
   followUser() {
-    const followData: FollowData = {loginId: this.loginId, followId: this.user.id};
+    const followData: FollowData = {
+      loginId: this.loginId,
+      followId: this.user.id
+    };
     this.userService.followUser(followData).subscribe(() => {
       this.user.isFollowed = true;
     });
   }
 
   unfollowUser() {
-    const unfollowData: FollowData = {loginId: this.loginId, followId: this.user.id};
+    const unfollowData: FollowData = {
+      loginId: this.loginId,
+      followId: this.user.id
+    };
     this.userService.unfollowUser(unfollowData).subscribe(() => {
       this.user.isFollowed = false;
     });
   }
 
-  openListDialog(list: FollowListData[], listType: ListType): void {
+  openListDialog(list: UserListData[], listType: ListType): void {
     if (!list || list.length === 0) {
       return;
     }
@@ -82,16 +86,14 @@ export class UserComponent implements OnInit {
   }
 
   getFollowerList() {
-    this.userService.getFollowerList(this.user.id).subscribe((result) => {
+    this.userService.getFollowerList(this.user.id).subscribe(result => {
       this.openListDialog(result.followerList, ListType.Followers);
     });
   }
 
   getFollowingList() {
-    this.userService.getFollowingList(this.user.id).subscribe((result) => {
+    this.userService.getFollowingList(this.user.id).subscribe(result => {
       this.openListDialog(result.followingList, ListType.Following);
     });
   }
 }
-
-
