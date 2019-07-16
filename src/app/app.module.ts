@@ -11,9 +11,15 @@ import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { PostsModule } from './posts/posts.module';
+import { ListModalComponent } from './shared/list-modals/list-modal.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, ErrorComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    ErrorComponent,
+    ListModalComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +33,6 @@ import { PostsModule } from './posts/posts.module';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent]
+  entryComponents: [ErrorComponent, ListModalComponent]
 })
 export class AppModule {}
