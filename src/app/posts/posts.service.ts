@@ -16,9 +16,10 @@ export class PostsService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getPosts() {
+  getPosts(id?: string) {
+    const URL = id ? BACK_END_URL + id : BACK_END_URL;
     this.http
-      .get<{ message: string; posts: any }>(BACK_END_URL)
+      .get<{ message: string; posts: any }>(URL)
       .pipe(
         map(postData => {
           return {
@@ -29,7 +30,8 @@ export class PostsService {
                 id: post._id,
                 imagePath: post.imagePath,
                 creator: post.creator,
-                likeCount: post.likeCount
+                likeCount: post.likeCount,
+                liked: post.liked
               };
             })
           };

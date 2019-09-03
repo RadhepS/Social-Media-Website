@@ -64,6 +64,15 @@ exports.updatePost = (req, res, next) => {
 exports.getPosts = (req, res, next) => {
   Post.find()
     .then(posts => {
+      if (req.params.id) {
+        posts.forEach(function(post) {
+          post.likesUsers.forEach(function(likedUser) {
+            if (likedUser.toString() == req.params.id) {
+              post.liked = true;
+            }
+          });
+        });
+      }
       res.status(200).json({
         message: 'posts fetched successfully',
         posts: posts

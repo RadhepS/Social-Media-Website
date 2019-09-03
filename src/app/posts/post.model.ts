@@ -7,4 +7,5 @@ export interface Post {
   username: string;
   isUserPage?: boolean;
   likeCount?: number;
+  liked?: boolean;
 }

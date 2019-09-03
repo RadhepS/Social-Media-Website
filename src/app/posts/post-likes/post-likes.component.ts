@@ -13,15 +13,21 @@ export class PostLikesComponent implements OnInit {
   @Input()
   postCreator: string;
   @Input()
+  postLiked: boolean;
+  @Input()
   userId: string;
   @Input()
   isAuthenticated: boolean;
   @Output()
   like: EventEmitter<any> = new EventEmitter();
 
+  likeStatus: string;
+
   constructor(private postsService: PostsService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.likeStatus = this.postLiked ? 'LIKED' : 'LIKE';
+  }
 
   likePost() {
     if (!this.isAuthenticated) {

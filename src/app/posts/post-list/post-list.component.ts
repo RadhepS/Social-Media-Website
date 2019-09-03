@@ -33,11 +33,14 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.isUserPage = paramMap.has('username'); // Checks to see whether we're on the user page
     });
     this.isLoading = true;
-    if (!this.isUserPage) {
-      // If we're not on the user page then retrieve all posts
-      this.postsService.getPosts();
-    }
     this.userId = this.authService.getUserId();
+    if (!this.isUserPage) {
+      if (this.userId) {
+        this.postsService.getPosts(this.userId);
+      } else {
+        this.postsService.getPosts();
+      }
+    }
     this.postsSub = this.postsService
       .getPostUpdatedListener()
       .subscribe((postData: { posts: Post[] }) => {

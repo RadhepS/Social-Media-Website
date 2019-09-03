@@ -11,7 +11,8 @@ const postSchema = mongoose.Schema({
   },
   username: { type: String, required: true },
   likesUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  likeCount: { type: Number, default: 0 }
+  likeCount: { type: Number, default: 0 },
+  liked: { type: Boolean, required: false }
   //Maybe add middleware to make sure users.length === count
 });
 

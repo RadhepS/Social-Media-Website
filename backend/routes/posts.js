@@ -9,7 +9,7 @@ router.post('', checkAuth, extractFile, PostsController.createPost);
 
 router.put('/:id', checkAuth, extractFile, PostsController.updatePost);
 
-router.get('', PostsController.getPosts);
+router.get('/:id?', PostsController.getPosts);
 
 router.get('/:id', PostsController.getPost);
 
