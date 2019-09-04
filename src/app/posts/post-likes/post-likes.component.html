@@ -1,3 +1,6 @@
-<button mat-button color="primary" (click)="likePost()">
-  {{ likeStatus }}
+<button *ngIf="!postLiked" mat-button color="primary" (click)="likePost()">
+  LIKE
+</button>
+<button *ngIf="postLiked" mat-button color="primary" (click)="likePost()">
+  LIKED
 </button>
