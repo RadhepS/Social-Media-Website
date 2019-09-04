@@ -179,6 +179,49 @@ exports.likePost = (req, res, next) => {
     });
 };
 
+exports.unlikePost = (req, res, next) => {
+  const postId = req.body.postId;
+  const likedByUserId = req.body.userId;
+  const postCreatorId = req.body.postCreator;
+
+  //Ensure that a user cannot like their own post (Validation)
+  if (postCreatorId === likedByUserId) {
+    return res.status(401).json({ message: 'You cannot unlike your own post' });
+  }
+
+  Post.updateOne(
+    { _id: postId }, //Find the logged-in user
+    { $pull: { likesUsers: likedByUserId } } //Remove the user from the like list
+  ) //Continue if previous update was successful
+    .then(result => {
+      if (result.nModified > 0) {
+        Post.findByIdAndUpdate(
+          postId,
+          { $inc: { likeCount: -1 } },
+          { new: true }
+        )
+          .then(result => {
+            if (result) {
+              res.status(200).json({
+                message: 'Unlike successful',
+                likeCount: result.likeCount
+              });
+            }
+          })
+          .catch(error => {
+            res.status(500).json({
+              message: "Couldn't update post"
+            });
+          });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Couldn't update post"
+      });
+    });
+};
+
 exports.getLikedUsers = (req, res, next) => {
   Post.findById(req.params.postId)
     .then(result => {

@@ -36,6 +36,20 @@ export class PostLikesComponent implements OnInit {
       .likePost(this.postId, this.postCreator, this.userId)
       .subscribe(result => {
         this.like.emit(result.likeCount);
+        this.postLiked = true;
+      });
+  }
+
+  unlikePost() {
+    if (!this.isAuthenticated) {
+      return;
+    }
+
+    this.postsService
+      .unlikePost(this.postId, this.postCreator, this.userId)
+      .subscribe(result => {
+        this.like.emit(result.likeCount);
+        this.postLiked = false;
       });
   }
 }

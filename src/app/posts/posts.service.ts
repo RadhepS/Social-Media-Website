@@ -165,4 +165,15 @@ export class PostsService {
       BACK_END_URL + 'getLikedUsers' + '/' + postId
     );
   }
+
+  unlikePost(postId: string, postCreator: string, userId: string) {
+    const postUnlikeData = new FormData();
+    postUnlikeData.append('postId', postId);
+    postUnlikeData.append('postCreator', postCreator);
+    postUnlikeData.append('userId', userId);
+    return this.http.post<{ message: string; likeCount: number }>(
+      BACK_END_URL + 'unlikes',
+      postUnlikeData
+    );
+  }
 }

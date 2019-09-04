@@ -19,6 +19,8 @@ router.delete('/:id', checkAuth, PostsController.deletePost);
 
 router.post('/likes', extractFile, PostsController.likePost);
 
+router.post('/unlikes', extractFile, PostsController.unlikePost);
+
 router.get('/getLikedUsers/:postId', PostsController.getLikedUsers);
 
 module.exports = router;
