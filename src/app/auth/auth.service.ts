@@ -131,9 +131,9 @@ export class AuthService {
     }
 
     return {
-      token,
+      token: token,
       expirationDate: new Date(expirationDate),
-      userId
+      userId: userId
     };
   }
 }

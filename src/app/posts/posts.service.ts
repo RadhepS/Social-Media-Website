@@ -9,55 +9,68 @@ import { Router } from '@angular/router';
 
 const BACK_END_URL = environment.apiUrl + '/posts/';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class PostsService {
   private posts: Post[] = [];
-  private postsUpdated = new Subject<{posts: Post[]}>();
+  private postsUpdated = new Subject<{ posts: Post[] }>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getPosts() {
-
-    this.http.get<{message: string, posts: any}>(BACK_END_URL)
-      .pipe(map((postData) => {
-        return { posts: postData.posts.map(post => {
+  getPosts(id?: string) {
+    const URL = id ? BACK_END_URL + id : BACK_END_URL;
+    this.http
+      .get<{ message: string; posts: any }>(URL)
+      .pipe(
+        map(postData => {
           return {
-            title: post.title,
-            content: post.content,
-            id: post._id,
-            imagePath: post.imagePath,
-            creator: post.creator
+            posts: postData.posts.map(post => {
+              return {
+                title: post.title,
+                content: post.content,
+                id: post._id,
+                imagePath: post.imagePath,
+                creator: post.creator,
+                likeCount: post.likeCount,
+                liked: post.liked
+              };
+            })
           };
-        })};
-      }))
-      .subscribe((transformedPostsData) => {
+        })
+      )
+      .subscribe(transformedPostsData => {
         this.posts = transformedPostsData.posts;
-        this.postsUpdated.next({posts: [...this.posts]});
+        this.postsUpdated.next({ posts: [...this.posts] });
       });
   }
 
   getUserPosts(id: string) {
-    this.http.get<{message: string, posts: any}>(BACK_END_URL + 'userposts/' + id)
+    this.http
+      .get<{ message: string; posts: any }>(BACK_END_URL + 'userposts/' + id)
       // .subscribe((response) => {
       //   this.posts = response.posts;
       //   this.postsUpdated.next( {posts: [...this.posts]} );
       // });
-      .pipe(map((postData) => {
-        return { posts: postData.posts.map(post => {
+      .pipe(
+        map(postData => {
           return {
-            title: post.title,
-            content: post.content,
-            id: post._id,
-            imagePath: post.imagePath,
-            creator: post.creator,
-            username: post.username,
-            isUserPage: true
+            posts: postData.posts.map(post => {
+              return {
+                title: post.title,
+                content: post.content,
+                id: post._id,
+                imagePath: post.imagePath,
+                creator: post.creator,
+                username: post.username,
+                isUserPage: true,
+                likeCount: post.likeCount
+              };
+            })
           };
-        })};
-      }))
-      .subscribe((transformedPostsData) => {
+        })
+      )
+      .subscribe(transformedPostsData => {
         this.posts = transformedPostsData.posts;
-        this.postsUpdated.next({posts: [...this.posts]});
+        this.postsUpdated.next({ posts: [...this.posts] });
       });
   }
 
@@ -68,12 +81,12 @@ export class PostsService {
   getPost(id: string) {
     return this.http.get<{
       _id: string;
-       title: string;
-       content: string;
-       imagePath: string;
-       creator: string;
-       username: string;
-      }>(BACK_END_URL + id);
+      title: string;
+      content: string;
+      imagePath: string;
+      creator: string;
+      username: string;
+    }>(BACK_END_URL + id);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -81,7 +94,8 @@ export class PostsService {
     postData.append('title', title);
     postData.append('content', content);
     postData.append('image', image, title);
-    this.http.post<{message: string, post: Post}>(BACK_END_URL, postData)
+    this.http
+      .post<{ message: string; post: Post }>(BACK_END_URL, postData)
       .subscribe(() => {
         // const post: Post = {id: responseData.post.id, title: title, content: content, imagePath: responseData.post.imagePath};
         // this.posts.push(post);
@@ -90,18 +104,32 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string, username: string) {
+  updatePost(
+    id: string,
+    title: string,
+    content: string,
+    image: File | string,
+    username: string
+  ) {
     let postData: Post | FormData;
-    if (typeof(image) === 'object') {
+    if (typeof image === 'object') {
       postData = new FormData();
       postData.append('id', id);
       postData.append('title', title);
       postData.append('content', content);
       postData.append('image', image, title);
     } else {
-      postData = {id: id, title: title, content: content, imagePath: image, creator: null, username: null};
+      postData = {
+        id: id,
+        title: title,
+        content: content,
+        imagePath: image,
+        creator: null,
+        username: null
+      };
     }
-    this.http.put<{message: string}>(BACK_END_URL + id, postData)
+    this.http
+      .put<{ message: string }>(BACK_END_URL + id, postData)
       .subscribe(() => {
         // const updatedPosts = [...this.posts];
         // const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
@@ -118,6 +146,34 @@ export class PostsService {
   }
 
   deletePost(postId: string) {
-   return this.http.delete(BACK_END_URL + postId);
+    return this.http.delete(BACK_END_URL + postId);
+  }
+
+  likePost(postId: string, postCreator: string, userId: string) {
+    const postLikeData = new FormData();
+    postLikeData.append('postId', postId);
+    postLikeData.append('postCreator', postCreator);
+    postLikeData.append('userId', userId);
+    return this.http.post<{ message: string; likeCount: number }>(
+      BACK_END_URL + 'likes',
+      postLikeData
+    );
+  }
+
+  getLikedUsers(postId: string) {
+    return this.http.get<{ message: string; likedUsers: any }>(
+      BACK_END_URL + 'getLikedUsers' + '/' + postId
+    );
+  }
+
+  unlikePost(postId: string, postCreator: string, userId: string) {
+    const postUnlikeData = new FormData();
+    postUnlikeData.append('postId', postId);
+    postUnlikeData.append('postCreator', postCreator);
+    postUnlikeData.append('userId', userId);
+    return this.http.post<{ message: string; likeCount: number }>(
+      BACK_END_URL + 'unlikes',
+      postUnlikeData
+    );
   }
 }

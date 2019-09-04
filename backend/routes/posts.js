@@ -1,22 +1,26 @@
-const express = require("express");
+const express = require('express');
 const checkAuth = require('../middleware/check-auth');
 
 const PostsController = require('../controllers/posts');
 const extractFile = require('../middleware/file');
 const router = express.Router();
 
+router.post('', checkAuth, extractFile, PostsController.createPost);
 
+router.put('/:id', checkAuth, extractFile, PostsController.updatePost);
 
-router.post("", checkAuth, extractFile, PostsController.createPost);
+router.get('/:id?', PostsController.getPosts);
 
-router.put("/:id", checkAuth, extractFile, PostsController.updatePost);
+router.get('/:id', PostsController.getPost);
 
-router.get("", PostsController.getPosts);
+router.get('/userposts/:id', PostsController.getUserPosts);
 
-router.get("/:id", PostsController.getPost);
+router.delete('/:id', checkAuth, PostsController.deletePost);
 
-router.get("/userposts/:id", PostsController.getUserPosts);
+router.post('/likes', extractFile, PostsController.likePost);
 
-router.delete("/:id", checkAuth, PostsController.deletePost);
+router.post('/unlikes', extractFile, PostsController.unlikePost);
+
+router.get('/getLikedUsers/:postId', PostsController.getLikedUsers);
 
 module.exports = router;

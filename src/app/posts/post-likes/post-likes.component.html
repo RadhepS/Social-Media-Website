@@ -1,0 +1,6 @@
+<button *ngIf="!postLiked" mat-button color="primary" (click)="likePost()">
+  LIKE
+</button>
+<button *ngIf="postLiked" mat-button color="primary" (click)="unlikePost()">
+  LIKED
+</button>

@@ -18,12 +18,12 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   enteredContent = '';
   isLoading = false;
   imagePreview: string;
-  private mode = 'create';
-  private postId: string;
-  private authStatusSub: Subscription;
   post: Post;
   form: FormGroup;
   username: string;
+  private mode = 'create';
+  private postId: string;
+  private authStatusSub: Subscription;
 
   constructor(
     public postsService: PostsService,

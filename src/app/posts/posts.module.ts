@@ -6,18 +6,25 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PostListComponent } from './post-list/post-list.component';
+import { PostLikesComponent } from './post-likes/post-likes.component';
+import { MatIconModule, MatBadgeModule } from '@angular/material';
+import { PostLikeCounterComponent } from './post-like-counter/post-like-counter.component';
 
 @NgModule({
   declarations: [
     PostCreateComponent,
-    PostListComponent
+    PostListComponent,
+    PostLikesComponent,
+    PostLikeCounterComponent
   ],
   exports: [PostListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    RouterModule
+    RouterModule,
+    MatIconModule,
+    MatBadgeModule
   ]
 })
 export class PostsModule {}

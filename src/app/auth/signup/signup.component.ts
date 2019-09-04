@@ -9,12 +9,12 @@ import { ISignupData } from './signup-data.model';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  public isLoading = false;
+  isLoading = false;
   private authStatusSub: Subscription;
 
   constructor(public authService: AuthService) {}
 
-  public ngOnInit() {
+  ngOnInit() {
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(() => {
@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       });
   }
 
-  public onSignup(form: NgForm) {
+  onSignup(form: NgForm) {
     if (form.invalid) {
       return;
     }
@@ -35,7 +35,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.authService.createUser(signupData);
   }
 
-  public ngOnDestroy() {
+  ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }
 }

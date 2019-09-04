@@ -1,6 +1,5 @@
-export interface FollowListData {
+export interface UserListData {
   name: string;
   followerCount: number;
   followingCount: number;
- }
-
+}
