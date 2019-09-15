@@ -7,12 +7,19 @@
         <div class="gallery-item-info">
           <ul>
             <li class="gallery-item-likes">
-              <span class="visually-hidden">Likes:</span
-              ><i class="fas fa-heart" aria-hidden="true"></i> 56
-            </li>
-            <li class="gallery-item-comments">
-              <span class="visually-hidden">Comments:</span
-              ><i class="fas fa-comment" aria-hidden="true"></i> 2
+              <span class="visually-hidden">Likes:</span>
+              <app-post-likes
+                [postId]="post.id"
+                [postCreator]="post.creator"
+                [postLiked]="post.liked"
+                [userId]="userId"
+                [isAuthenticated]="userIsAuthenticated"
+                (like)="onLike($event, post)"
+              ></app-post-likes>
+              <app-post-like-counter
+                [likeCount]="post.likeCount"
+                [postId]="post.id"
+              ></app-post-like-counter>
             </li>
           </ul>
         </div>

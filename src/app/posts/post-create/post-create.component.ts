@@ -7,6 +7,7 @@ import { Post } from '../post.model';
 import { mimeType } from './mime-type.validator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-post-create',
@@ -28,7 +29,8 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   constructor(
     public postsService: PostsService,
     public route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private imageCompress: NgxImageCompressService
   ) {}
 
   ngOnInit() {
@@ -80,15 +82,29 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ image: file });
-    this.form.get('image').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+  onImagePicked() {
+    // this.imageCompress.compressFile(file, orientation, 500, 50).then(result => {
+    //   this.form.patchValue({ image: result });
+    //   this.form.get('image').updateValueAndValidity();
+    //   this.imagePreview = result;
+    // });
+
+    this.imageCompress.uploadFile().then(({ image, orientation }) => {
+      this.imageCompress
+        .compressFile(image, orientation, 80, 80)
+        .then(result => {
+          fetch(result)
+            .then(resultData => resultData.blob())
+            .then(blob => {
+              const file = new File([blob], 'image', { type: 'image/jpeg' });
+              console.log(file);
+
+              this.form.patchValue({ image: file });
+              this.form.get('image').updateValueAndValidity();
+              this.imagePreview = result;
+            });
+        });
+    });
   }
 
   onSavePost() {

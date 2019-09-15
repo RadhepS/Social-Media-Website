@@ -88,6 +88,15 @@ exports.getPosts = (req, res, next) => {
 exports.getUserPosts = (req, res, next) => {
   Post.find({ creator: req.params.id })
     .then(posts => {
+      if (req.params.loginId) {
+        posts.forEach(function(post) {
+          post.likesUsers.forEach(function(likedUser) {
+            if (likedUser.toString() == req.params.loginId) {
+              post.liked = true;
+            }
+          });
+        });
+      }
       res.status(200).json({
         message: "User's posts fetched successfully",
         posts: posts
@@ -148,7 +157,7 @@ exports.likePost = (req, res, next) => {
 
   Post.updateOne(
     { _id: postId }, //Find the logged-in user
-    { $addToSet: { likesUsers: likedByUserId } } //Remove the user he wants to unfollow from the logged-in user's following list
+    { $addToSet: { likesUsers: likedByUserId } } //Add the user to the like list
   ) //Continue if previous update was successful
     .then(result => {
       if (result.nModified > 0) {

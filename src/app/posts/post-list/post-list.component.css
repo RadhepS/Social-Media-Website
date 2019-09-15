@@ -203,7 +203,7 @@ img {
 
 .gallery-image {
   width: 100%;
-  height: 100%;
+  height: 300px;
   object-fit: cover;
 }
 
@@ -332,7 +332,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
   .gallery {
     display: grid;
     /* grid-template-rows: repeat(auto-fit, 100px); */
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     grid-gap: 2rem;
   }
 
@@ -376,4 +376,14 @@ Remove or comment-out the code block below to see how the browser will fall-back
       margin: 0;
     }
   }
+}
+
+.mat-icon {
+  position: relative;
+  top: 3px;
+  font-size: 25px;
+}
+
+main {
+  margin-top: 2rem;
 }
