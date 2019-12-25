@@ -31,7 +31,8 @@ export class PostsService {
                 imagePath: post.imagePath,
                 creator: post.creator,
                 likeCount: post.likeCount,
-                liked: post.liked
+                liked: post.liked,
+                username: post.username
               };
             })
           };

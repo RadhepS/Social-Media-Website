@@ -178,12 +178,22 @@ img {
   display: none;
 }
 
+.like-counter {
+  font-size: 1.4rem;
+  position: relative;
+  bottom: 4px;
+}
+
 .gallery-item-info li {
   display: inline-block;
   font-size: 1.7rem;
   font-weight: 600;
 }
 
+.gallery-item-info ul  {
+  font-size: 15px; color: #fff;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
 .gallery-item-likes {
   margin-right: 2.2rem;
 }
@@ -204,7 +214,7 @@ img {
 .gallery-image {
   width: 100%;
   height: 300px;
-  object-fit: cover;
+  text-align: center;
 }
 
 /* Loader */

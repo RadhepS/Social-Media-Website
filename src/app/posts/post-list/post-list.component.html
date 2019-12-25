@@ -6,6 +6,7 @@
 
         <div class="gallery-item-info">
           <ul>
+            <p>{{post.username}}</p>
             <li class="gallery-item-likes">
               <span class="visually-hidden">Likes:</span>
               <app-post-likes
@@ -17,6 +18,7 @@
                 (like)="onLike($event, post)"
               ></app-post-likes>
               <app-post-like-counter
+                class="like-counter"
                 [likeCount]="post.likeCount"
                 [postId]="post.id"
               ></app-post-like-counter>
