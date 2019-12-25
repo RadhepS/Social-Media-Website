@@ -43,9 +43,12 @@ export class PostsService {
       });
   }
 
-  getUserPosts(id: string) {
+  getUserPosts(id: string, loginId?: string) {
+    console.log('loginId', loginId);
     this.http
-      .get<{ message: string; posts: any }>(BACK_END_URL + 'userposts/' + id)
+      .get<{ message: string; posts: any }>(
+        BACK_END_URL + 'userposts/' + id + '/' + loginId
+      )
       // .subscribe((response) => {
       //   this.posts = response.posts;
       //   this.postsUpdated.next( {posts: [...this.posts]} );
@@ -62,7 +65,8 @@ export class PostsService {
                 creator: post.creator,
                 username: post.username,
                 isUserPage: true,
-                likeCount: post.likeCount
+                likeCount: post.likeCount,
+                liked: post.liked
               };
             })
           };

@@ -13,7 +13,7 @@ router.get('/:id?', PostsController.getPosts);
 
 router.get('/:id', PostsController.getPost);
 
-router.get('/userposts/:id', PostsController.getUserPosts);
+router.get('/userposts/:id/:loginId', PostsController.getUserPosts);
 
 router.delete('/:id', checkAuth, PostsController.deletePost);
 

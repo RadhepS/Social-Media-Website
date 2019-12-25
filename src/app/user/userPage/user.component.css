@@ -12,8 +12,8 @@ mat-spinner {
 }
 
 .profile-card div {
-  width: 100px;  /* Or whatever */
-  margin: auto;  /* Magic! */
+  width: 100px; /* Or whatever */
+  margin: auto; /* Magic! */
   margin-top: 1rem;
 }
 
@@ -35,3 +35,6 @@ div mat-card-title {
   left: 12px;
 }
 
+body {
+  background-color: #fafafa;
+}

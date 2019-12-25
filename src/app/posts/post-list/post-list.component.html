@@ -1,52 +1,33 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
-  <mat-expansion-panel *ngFor="let post of posts">
-    <mat-expansion-panel-header>
-      {{ post.title }}
-    </mat-expansion-panel-header>
-    <div class="post-image">
-      <img [src]="post.imagePath" [alt]="post.title" />
-    </div>
-    <p>
-      {{ post.content }}
-    </p>
-    <mat-action-row>
-      <div class="likes-and-comments" *ngIf="userId != post.creator">
-        <div class="container">
-          <div class="like-counter-centered">
-            <app-post-like-counter
-              [likeCount]="post.likeCount"
-              [postId]="post.id"
-            ></app-post-like-counter>
-          </div>
-          <app-post-likes
-            [postId]="post.id"
-            [postCreator]="post.creator"
-            [postLiked]="post.liked"
-            [userId]="userId"
-            [isAuthenticated]="userIsAuthenticated"
-            (like)="onLike($event, post)"
-          ></app-post-likes>
+<main>
+  <div class="container">
+    <div class="gallery">
+      <div *ngFor="let post of posts" class="gallery-item" tabindex="0">
+        <img [src]="post.imagePath" class="gallery-image" alt="post.title" />
+
+        <div class="gallery-item-info">
+          <ul>
+            <li class="gallery-item-likes">
+              <span class="visually-hidden">Likes:</span>
+              <app-post-likes
+                [postId]="post.id"
+                [postCreator]="post.creator"
+                [postLiked]="post.liked"
+                [userId]="userId"
+                [isAuthenticated]="userIsAuthenticated"
+                (like)="onLike($event, post)"
+              ></app-post-likes>
+              <app-post-like-counter
+                [likeCount]="post.likeCount"
+                [postId]="post.id"
+              ></app-post-like-counter>
+            </li>
+          </ul>
         </div>
       </div>
-      <div *ngIf="userIsAuthenticated && userId === post.creator">
-        <a
-          mat-button
-          color="primary"
-          (click)="onEdit(post.id, post.isUserPage, post.username)"
-          >EDIT</a
-        >
-        <button
-          mat-button
-          color="warn"
-          (click)="onDelete(post.id, post.isUserPage, post.creator)"
-        >
-          DELETE
-        </button>
-      </div>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">
-  No posts added yet!
-</p>
+    </div>
+    <!-- End of gallery -->
+
+    <div class="loader"></div>
+  </div>
+  <!-- End of container -->
+</main>

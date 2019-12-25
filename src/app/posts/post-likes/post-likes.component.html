@@ -1,6 +1,4 @@
-<button *ngIf="!postLiked" mat-button color="primary" (click)="likePost()">
-  LIKE
-</button>
-<button *ngIf="postLiked" mat-button color="primary" (click)="unlikePost()">
-  LIKED
-</button>
+<mat-icon *ngIf="!postLiked" (click)="likePost()">favorite_border</mat-icon>
+<mat-icon *ngIf="postLiked" color="primary" (click)="unlikePost()"
+  >favorite</mat-icon
+>

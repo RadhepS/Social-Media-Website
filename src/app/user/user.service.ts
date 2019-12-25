@@ -31,7 +31,7 @@ export class UserService {
         response => {
           this.user = response.user;
           this.userUpdated.next({ user: this.user });
-          this.postService.getUserPosts(this.user.id);
+          this.postService.getUserPosts(this.user.id, loginId);
         },
         () => {
           this.router.navigate(['/']);
