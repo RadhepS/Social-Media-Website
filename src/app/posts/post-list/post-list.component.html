@@ -5,8 +5,8 @@
         <img [src]="post.imagePath" class="gallery-image" alt="post.title" />
 
         <div class="gallery-item-info">
-          <ul>
-            <li class="gallery-item-likes">
+            <p (click)="onUserClick(post)">{{post.username}}</p>
+            <div class="gallery-item-likes">
               <span class="visually-hidden">Likes:</span>
               <app-post-likes
                 [postId]="post.id"
@@ -17,11 +17,11 @@
                 (like)="onLike($event, post)"
               ></app-post-likes>
               <app-post-like-counter
+                class="like-counter"
                 [likeCount]="post.likeCount"
                 [postId]="post.id"
               ></app-post-like-counter>
-            </li>
-          </ul>
+            </div>
         </div>
       </div>
     </div>
