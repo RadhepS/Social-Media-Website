@@ -84,6 +84,10 @@ export class PostListComponent implements OnInit, OnDestroy {
     post.likeCount = likeCount;
   }
 
+  onUserClick(post: Post) {
+    this.router.navigate(['/user', post.username]);
+  }
+
   ngOnDestroy() {
     this.postsSub.unsubscribe();
     this.authStatusSub.unsubscribe();

@@ -5,7 +5,7 @@
         <img [src]="post.imagePath" class="gallery-image" alt="post.title" />
 
         <div class="gallery-item-info">
-            <p>{{post.username}}</p>
+            <p (click)="onUserClick(post)">{{post.username}}</p>
             <div class="gallery-item-likes">
               <span class="visually-hidden">Likes:</span>
               <app-post-likes
