@@ -1,28 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
-import { PostsService } from '../posts.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Post } from '../post.model';
-import { mimeType } from './mime-type.validator';
-import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { NgxImageCompressService } from 'ngx-image-compress';
+import { PostsService } from "../posts.service";
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Post } from "../post.model";
+import { mimeType } from "./mime-type.validator";
+import { Subscription } from "rxjs";
+import { AuthService } from "src/app/auth/auth.service";
+import { NgxImageCompressService } from "ngx-image-compress";
 
 @Component({
-  selector: 'app-post-create',
-  templateUrl: './post-create.component.html',
-  styleUrls: ['./post-create.component.css']
+  selector: "app-post-create",
+  templateUrl: "./post-create.component.html",
+  styleUrls: ["./post-create.component.css"]
 })
 export class PostCreateComponent implements OnInit, OnDestroy {
-  enteredTitle = '';
-  enteredContent = '';
+  enteredTitle = "";
+  enteredContent = "";
   isLoading = false;
   imagePreview: string;
   post: Post;
   form: FormGroup;
   username: string;
-  private mode = 'create';
+  private mode = "create";
   private postId: string;
   private authStatusSub: Subscription;
 
@@ -52,12 +52,12 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('postId')) {
-        this.mode = 'edit';
-        this.postId = paramMap.get('postId');
+      if (paramMap.has("postId")) {
+        this.mode = "edit";
+        this.postId = paramMap.get("postId");
         this.isLoading = true;
-        if (paramMap.get('username') !== '') {
-          this.username = paramMap.get('username');
+        if (paramMap.get("username") !== "") {
+          this.username = paramMap.get("username");
         }
         this.postsService.getPost(this.postId).subscribe(postData => {
           this.isLoading = false;
@@ -76,7 +76,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
           });
         });
       } else {
-        this.mode = 'create';
+        this.mode = "create";
         this.postId = null;
       }
     });
@@ -96,11 +96,10 @@ export class PostCreateComponent implements OnInit, OnDestroy {
           fetch(result)
             .then(resultData => resultData.blob())
             .then(blob => {
-              const file = new File([blob], 'image', { type: 'image/jpeg' });
-              console.log(file);
+              const file = new File([blob], "image", { type: "image/jpeg" });
 
               this.form.patchValue({ image: file });
-              this.form.get('image').updateValueAndValidity();
+              this.form.get("image").updateValueAndValidity();
               this.imagePreview = result;
             });
         });
@@ -113,7 +112,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     }
 
     this.isLoading = true;
-    if (this.mode === 'create') {
+    if (this.mode === "create") {
       this.postsService.addPost(
         this.form.value.title,
         this.form.value.content,

@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Subject } from "rxjs";
+import { map } from "rxjs/operators";
 
-import { environment } from '../../environments/environment';
-import { Post } from './post.model';
-import { Router } from '@angular/router';
+import { environment } from "../../environments/environment";
+import { Post } from "./post.model";
+import { Router } from "@angular/router";
 
-const BACK_END_URL = environment.apiUrl + '/posts/';
+const BACK_END_URL = environment.apiUrl + "/posts/";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[] }>();
@@ -45,10 +45,9 @@ export class PostsService {
   }
 
   getUserPosts(id: string, loginId?: string) {
-    console.log('loginId', loginId);
     this.http
       .get<{ message: string; posts: any }>(
-        BACK_END_URL + 'userposts/' + id + '/' + loginId
+        BACK_END_URL + "userposts/" + id + "/" + loginId
       )
       // .subscribe((response) => {
       //   this.posts = response.posts;
@@ -96,16 +95,16 @@ export class PostsService {
 
   addPost(title: string, content: string, image: File) {
     const postData = new FormData();
-    postData.append('title', title);
-    postData.append('content', content);
-    postData.append('image', image, title);
+    postData.append("title", title);
+    postData.append("content", content);
+    postData.append("image", image, title);
     this.http
       .post<{ message: string; post: Post }>(BACK_END_URL, postData)
       .subscribe(() => {
         // const post: Post = {id: responseData.post.id, title: title, content: content, imagePath: responseData.post.imagePath};
         // this.posts.push(post);
         // this.postsUpdated.next([...this.posts]);
-        this.router.navigate(['/']);
+        this.router.navigate(["/"]);
       });
   }
 
@@ -117,12 +116,12 @@ export class PostsService {
     username: string
   ) {
     let postData: Post | FormData;
-    if (typeof image === 'object') {
+    if (typeof image === "object") {
       postData = new FormData();
-      postData.append('id', id);
-      postData.append('title', title);
-      postData.append('content', content);
-      postData.append('image', image, title);
+      postData.append("id", id);
+      postData.append("title", title);
+      postData.append("content", content);
+      postData.append("image", image, title);
     } else {
       postData = {
         id: id,
@@ -143,9 +142,9 @@ export class PostsService {
         // this.posts = updatedPosts;
         // this.postsUpdated.next([...this.posts]);
         if (username) {
-          this.router.navigate(['/user/', username]);
+          this.router.navigate(["/user/", username]);
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(["/"]);
         }
       });
   }
@@ -156,28 +155,28 @@ export class PostsService {
 
   likePost(postId: string, postCreator: string, userId: string) {
     const postLikeData = new FormData();
-    postLikeData.append('postId', postId);
-    postLikeData.append('postCreator', postCreator);
-    postLikeData.append('userId', userId);
+    postLikeData.append("postId", postId);
+    postLikeData.append("postCreator", postCreator);
+    postLikeData.append("userId", userId);
     return this.http.post<{ message: string; likeCount: number }>(
-      BACK_END_URL + 'likes',
+      BACK_END_URL + "likes",
       postLikeData
     );
   }
 
   getLikedUsers(postId: string) {
     return this.http.get<{ message: string; likedUsers: any }>(
-      BACK_END_URL + 'getLikedUsers' + '/' + postId
+      BACK_END_URL + "getLikedUsers" + "/" + postId
     );
   }
 
   unlikePost(postId: string, postCreator: string, userId: string) {
     const postUnlikeData = new FormData();
-    postUnlikeData.append('postId', postId);
-    postUnlikeData.append('postCreator', postCreator);
-    postUnlikeData.append('userId', userId);
+    postUnlikeData.append("postId", postId);
+    postUnlikeData.append("postCreator", postCreator);
+    postUnlikeData.append("userId", userId);
     return this.http.post<{ message: string; likeCount: number }>(
-      BACK_END_URL + 'unlikes',
+      BACK_END_URL + "unlikes",
       postUnlikeData
     );
   }

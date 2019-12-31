@@ -1,26 +1,58 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-<mat-card *ngIf="!isLoading" class='profile-card'>
-  <div class="test">
-    <ul>
-      <li> <mat-card-content (click)="getFollowerList()">Followers: {{user.followerCount}} </mat-card-content> </li>
-      <li> <mat-card-content (click)="getFollowingList()">Following: {{user.followingCount}} </mat-card-content> </li>
-      <li> <mat-card-content>Posts: {{user.postCount}} </mat-card-content> </li>
-    </ul>
-  </div>
-  <div>
-    <mat-card-title>{{this.user.username}}</mat-card-title>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  </div>
-  <div>
-    <!-- Only show the button if the user is logged in and he is not viewing his own profile-->
-    <div *ngIf="loginId && !isSameUser">
-      <!-- If the user on the profile is not followed, then we show the follow button -->
-      <button *ngIf="!user.isFollowed" (click)="followUser()">Follow</button>
-      <!-- If the user on the profile is followed, then we show the following button -->
-      <button *ngIf="user.isFollowed" style="background-color: lightblue;" (click)="unfollowUser()">Following</button>
+<header *ngIf="!isLoading">
+  <div class="container">
+    <div class="profile">
+      <div class="profile-image">
+        <img
+          src="https://reboundgaming.network/wp-content/uploads/2019/01/avatar-placeholder-150x150.png?w=152&h=152&fit=crop&crop=faces"
+          alt=""
+        />
+      </div>
+
+      <div class="profile-user-settings">
+        <h1 class="profile-user-name">{{ user.username }}</h1>
+        <!-- Only show the button if the user is logged in and he is not viewing his own profile -->
+        <div *ngIf="loginId && !isSameUser">
+          <!-- If the user on the profile is not followed, then we show the follow button -->
+          <button
+            class="btn profile-edit-btn"
+            *ngIf="!user.isFollowed"
+            (click)="followUser()"
+          >
+            Follow
+          </button>
+          <!-- If the user on the profile is followed, then we show the following button -->
+          <button
+            class="btn profile-edit-btn"
+            *ngIf="user.isFollowed"
+            style="color: #fff; background-color: #263238;"
+            (click)="unfollowUser()"
+          >
+            Following
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-stats">
+        <ul>
+          <li>
+            <span class="profile-stat-count">{{ user.postCount }}</span> posts
+          </li>
+          <li (click)="getFollowerList()">
+            <span class="profile-stat-count">{{ user.followerCount }}</span>
+            followers
+          </li>
+          <li (click)="getFollowingList()">
+            <span class="profile-stat-count">{{ user.followingCount }}</span>
+            following
+          </li>
+        </ul>
+      </div>
     </div>
+    <!-- End of profile section -->
   </div>
-</mat-card>
+  <!-- End of container -->
+</header>
 
 <app-post-list></app-post-list>
