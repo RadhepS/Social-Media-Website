@@ -6,3 +6,16 @@
 .flexItem {
   padding-left: 40px;
 }
+
+mat-dialog-content div h2 {
+  margin: 0px;
+  display: inline-block;
+}
+
+mat-dialog-content div h2:hover {
+  cursor: pointer;
+}
+
+hr {
+  border-width: thin;
+}
