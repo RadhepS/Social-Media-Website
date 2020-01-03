@@ -1,12 +1,12 @@
-const Post = require('../models/post');
-const User = require('../models/user');
+const Post = require("../models/post");
+const User = require("../models/user");
 
 exports.createPost = (req, res, next) => {
-  const url = req.protocol + '://' + req.get('host');
+  const url = req.protocol + "://" + req.get("host");
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
-    imagePath: url + '/images/' + req.file.filename,
+    imagePath: url + "/images/" + req.file.filename,
     creator: req.userData.userId,
     username: req.userData.username
   });
@@ -14,7 +14,7 @@ exports.createPost = (req, res, next) => {
     .save()
     .then(createdPost => {
       res.status(201).json({
-        message: 'Post added successfully',
+        message: "Post added successfully",
         post: {
           ...createdPost,
           id: createdPost._id
@@ -23,7 +23,7 @@ exports.createPost = (req, res, next) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Creating a post failed'
+        message: "Creating a post failed"
       });
     });
 };
@@ -31,8 +31,8 @@ exports.createPost = (req, res, next) => {
 exports.updatePost = (req, res, next) => {
   let imagePath = req.body.imagePath;
   if (req.file) {
-    const url = req.protocol + '://' + req.get('host');
-    imagePath = url + '/images/' + req.file.filename;
+    const url = req.protocol + "://" + req.get("host");
+    imagePath = url + "/images/" + req.file.filename;
   }
   const post = new Post({
     _id: req.body.id,
@@ -46,12 +46,12 @@ exports.updatePost = (req, res, next) => {
     .then(result => {
       if (result.n > 0) {
         res.status(200).json({
-          message: 'Update successful'
+          message: "Update successful"
         });
       } else {
         res
           .status(401)
-          .json({ message: 'Not authorized to update this post!' });
+          .json({ message: "Not authorized to update this post!" });
       }
     })
     .catch(error => {
@@ -62,7 +62,10 @@ exports.updatePost = (req, res, next) => {
 };
 
 exports.getPosts = (req, res, next) => {
+  let num = parseInt(req.params.limit);
+  num += 6;
   Post.find()
+    .limit(num)
     .then(posts => {
       if (req.params.id) {
         posts.forEach(function(post) {
@@ -74,19 +77,22 @@ exports.getPosts = (req, res, next) => {
         });
       }
       res.status(200).json({
-        message: 'posts fetched successfully',
+        message: "posts fetched successfully",
         posts: posts
       });
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Unable to retrieve posts'
+        message: "Unable to retrieve posts"
       });
     });
 };
 
 exports.getUserPosts = (req, res, next) => {
+  let num = parseInt(req.params.limit);
+  num += 6;
   Post.find({ creator: req.params.id })
+    .limit(num)
     .then(posts => {
       if (req.params.loginId) {
         posts.forEach(function(post) {
@@ -115,12 +121,12 @@ exports.getPost = (req, res, next) => {
       if (post) {
         return res.status(200).json(post);
       } else {
-        return res.status(404).json({ message: 'Post not found' });
+        return res.status(404).json({ message: "Post not found" });
       }
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Unable to retrieve post'
+        message: "Unable to retrieve post"
       });
     });
 };
@@ -130,17 +136,17 @@ exports.deletePost = (req, res, next) => {
     .then(result => {
       if (result.n > 0) {
         res.status(200).json({
-          message: 'Deletion successful'
+          message: "Deletion successful"
         });
       } else {
         res
           .status(401)
-          .json({ message: 'Not authorized to delete this post!' });
+          .json({ message: "Not authorized to delete this post!" });
       }
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Unable to delete post'
+        message: "Unable to delete post"
       });
     });
 };
@@ -152,7 +158,7 @@ exports.likePost = (req, res, next) => {
 
   //Ensure that a user cannot like their own post (Validation)
   if (postCreatorId === likedByUserId) {
-    return res.status(401).json({ message: 'You cannot like your own post' });
+    return res.status(401).json({ message: "You cannot like your own post" });
   }
 
   Post.updateOne(
@@ -169,7 +175,7 @@ exports.likePost = (req, res, next) => {
           .then(result => {
             if (result) {
               res.status(200).json({
-                message: 'Like successful',
+                message: "Like successful",
                 likeCount: result.likeCount
               });
             }
@@ -195,7 +201,7 @@ exports.unlikePost = (req, res, next) => {
 
   //Ensure that a user cannot like their own post (Validation)
   if (postCreatorId === likedByUserId) {
-    return res.status(401).json({ message: 'You cannot unlike your own post' });
+    return res.status(401).json({ message: "You cannot unlike your own post" });
   }
 
   Post.updateOne(
@@ -212,7 +218,7 @@ exports.unlikePost = (req, res, next) => {
           .then(result => {
             if (result) {
               res.status(200).json({
-                message: 'Unlike successful',
+                message: "Unlike successful",
                 likeCount: result.likeCount
               });
             }
@@ -246,7 +252,7 @@ exports.getLikedUsers = (req, res, next) => {
             followingCount: user.following.length
           }));
           res.status(200).json({
-            message: 'Retrieved liked users successfully',
+            message: "Retrieved liked users successfully",
             likedUsers: formattedUserData
           });
         })
