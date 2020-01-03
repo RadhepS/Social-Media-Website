@@ -16,10 +16,10 @@ export class PostsService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getPosts(id?: string) {
+  getPosts(listSize: number, id?: string) {
     const URL = id ? BACK_END_URL + id : BACK_END_URL;
     this.http
-      .get<{ message: string; posts: any }>(URL)
+      .get<{ message: string; posts: any }>(`${URL}/${listSize}`)
       .pipe(
         map(postData => {
           return {
@@ -44,10 +44,10 @@ export class PostsService {
       });
   }
 
-  getUserPosts(id: string, loginId?: string) {
+  getUserPosts(listSize: number, id: string, loginId?: string) {
     this.http
       .get<{ message: string; posts: any }>(
-        BACK_END_URL + "userposts/" + id + "/" + loginId
+        BACK_END_URL + "userposts/" + listSize + "/" + id + "/" + loginId
       )
       // .subscribe((response) => {
       //   this.posts = response.posts;

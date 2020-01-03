@@ -1,27 +1,33 @@
 <main>
-  <div class="container">
+  <div
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    class="container"
+  >
     <div class="gallery">
       <div *ngFor="let post of posts" class="gallery-item" tabindex="0">
         <img [src]="post.imagePath" class="gallery-image" alt="post.title" />
 
         <div class="gallery-item-info">
-            <p (click)="onUserClick(post)">{{post.username}}</p>
-            <div class="gallery-item-likes">
-              <span class="visually-hidden">Likes:</span>
-              <app-post-likes
-                [postId]="post.id"
-                [postCreator]="post.creator"
-                [postLiked]="post.liked"
-                [userId]="userId"
-                [isAuthenticated]="userIsAuthenticated"
-                (like)="onLike($event, post)"
-              ></app-post-likes>
-              <app-post-like-counter
-                class="like-counter"
-                [likeCount]="post.likeCount"
-                [postId]="post.id"
-              ></app-post-like-counter>
-            </div>
+          <p (click)="onUserClick(post)">{{ post.username }}</p>
+          <div class="gallery-item-likes">
+            <span class="visually-hidden">Likes:</span>
+            <app-post-likes
+              [postId]="post.id"
+              [postCreator]="post.creator"
+              [postLiked]="post.liked"
+              [userId]="userId"
+              [isAuthenticated]="userIsAuthenticated"
+              (like)="onLike($event, post)"
+            ></app-post-likes>
+            <app-post-like-counter
+              class="like-counter"
+              [likeCount]="post.likeCount"
+              [postId]="post.id"
+            ></app-post-like-counter>
+          </div>
         </div>
       </div>
     </div>

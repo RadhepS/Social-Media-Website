@@ -32,6 +32,7 @@
     "mongoose-unique-validator": "^2.0.2",
     "multer": "^1.4.1",
     "ngx-image-compress": "^8.0.3",
+    "ngx-infinite-scroll": "^8.0.1",
     "nodemon": "^1.18.9",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
