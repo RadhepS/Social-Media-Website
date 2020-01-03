@@ -21,7 +21,7 @@ Flexbox and floats are used as a fallback so that browsers which don't support g
 }
 
 body {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   min-height: 100vh;
   background-color: #fafafa;
   color: #262626;
@@ -67,7 +67,7 @@ img {
 }
 
 .profile::after {
-  content: '';
+  content: "";
   display: block;
   clear: both;
 }
@@ -191,8 +191,9 @@ img {
   font-weight: 600;
 }
 
-.gallery-item-info  {
-  font-size: 15px; color: #fff;
+.gallery-item-info {
+  font-size: 15px;
+  color: #fff;
   text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
 
@@ -394,4 +395,9 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
 main {
   margin-top: 2rem;
+}
+
+mat-spinner {
+  left: 50%;
+  margin-left: -4em;
 }

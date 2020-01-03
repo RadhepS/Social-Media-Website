@@ -18,6 +18,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   userId: string;
   isUserPage = false;
+  isScrolled = false;
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
@@ -89,17 +90,17 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onScroll() {
-    let isScrolled;
-    if (isScrolled) {
+    console.log("in");
+    if (this.isScrolled) {
       return;
     }
-    isScrolled = true;
-    if (this.isUserPage) {
+    this.isScrolled = true;
+    if (this.isUserPage && this.posts.length > 0) {
       this.postsService.getUserPosts(this.posts.length, this.posts[0].creator);
     } else {
       this.postsService.getPosts(this.posts.length);
     }
-    isScrolled = false;
+    this.isScrolled = false;
   }
 
   ngOnDestroy() {

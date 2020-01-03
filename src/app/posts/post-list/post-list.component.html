@@ -1,4 +1,4 @@
-<main>
+<main *ngIf="!isLoading">
   <div
     infiniteScroll
     [infiniteScrollDistance]="2"
@@ -33,7 +33,7 @@
     </div>
     <!-- End of gallery -->
 
-    <div class="loader"></div>
+    <mat-spinner *ngIf="this.isScrolled"></mat-spinner>
   </div>
   <!-- End of container -->
 </main>
